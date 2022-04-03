@@ -3,7 +3,7 @@ unit Model.Cep;
 interface
 
 type
-  Cep = class
+  TCep = class
   private
     Fcep      : string;
     Fendereco : string;

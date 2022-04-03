@@ -3,9 +3,22 @@ unit View.Cep;
 interface
 
 uses
-  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
-  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.Objects,
-  FMX.Layouts, FMX.Controls.Presentation, FMX.StdCtrls, FMX.Edit, FMX.Effects,
+  System.SysUtils,
+  System.Types,
+  System.UITypes,
+  System.Classes,
+  System.Variants,
+  FMX.Types,
+  FMX.Controls,
+  FMX.Forms,
+  FMX.Graphics,
+  FMX.Dialogs,
+  FMX.Objects,
+  FMX.Layouts,
+  FMX.Controls.Presentation,
+  FMX.StdCtrls,
+  FMX.Edit,
+  FMX.Effects,
   FMX.Filter.Effects;
 
 type
@@ -40,7 +53,9 @@ type
     procedure edtCidadeKeyDown(Sender: TObject; var Key: Word;
       var KeyChar: Char; Shift: TShiftState);
     procedure FormShow(Sender: TObject);
+    procedure edtSearchCepClick(Sender: TObject);
   private
+    procedure BuscarCep;
     { Private declarations }
   public
     { Public declarations }
@@ -50,6 +65,9 @@ var
   FrmCadEndereco: TFrmCadEndereco;
 
 implementation
+
+uses
+  Controller.Cep, Model.Cep;
 
 {$R *.fmx}
 
@@ -64,7 +82,7 @@ procedure TFrmCadEndereco.edtCepKeyDown(Sender: TObject; var Key: Word;
   var KeyChar: Char; Shift: TShiftState);
 begin
   if (Key = vkReturn) or (Key = vkTab) then
-    //TODO: Implementar busca
+    BuscarCep;
 end;
 
 procedure TFrmCadEndereco.edtCidadeKeyDown(Sender: TObject; var Key: Word;
@@ -79,6 +97,29 @@ procedure TFrmCadEndereco.edtEnderecoKeyDown(Sender: TObject; var Key: Word;
 begin
   if (Key = vkReturn) or (Key = vkTab) then
     edtBairro.SetFocus;
+end;
+
+procedure TFrmCadEndereco.edtSearchCepClick(Sender: TObject);
+begin
+  BuscarCep;
+end;
+
+procedure TFrmCadEndereco.BuscarCep;
+var
+  LCep : TCep;
+begin
+  try
+    LCep := TControllerCep.GetCep(edtCep.Text);
+    if Assigned(LCep) then
+    begin
+      edtEndereco.Text := LCep.endereco;
+      edtBairro.Text   := LCep.bairro;
+      edtCidade.Text   := LCep.cidade;
+      edtUf.Text       := LCep.uf;
+    end;
+  finally
+    LCep.Free;
+  end;
 end;
 
 procedure TFrmCadEndereco.FormShow(Sender: TObject);

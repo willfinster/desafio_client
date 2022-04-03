@@ -4,7 +4,7 @@
         <ProjectVersion>19.2</ProjectVersion>
         <FrameworkType>FMX</FrameworkType>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">Release</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>33819</TargetedPlatforms>
         <AppType>Application</AppType>
@@ -254,12 +254,13 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="View\View.Cep">
+        <DCCReference Include="Controller\Controller.Cep.pas"/>
+        <DCCReference Include="Model\Model.Cep.pas"/>
+        <DCCReference Include="View\View.Cep.pas">
             <Form>FrmCadEndereco</Form>
             <FormType>fmx</FormType>
         </DCCReference>
-        <DCCReference Include="Controller\Controller.Cep.pas"/>
-        <DCCReference Include="Model\Model.Cep.pas"/>
+        <DCCReference Include="Model\Model.Utils.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
