@@ -581,6 +581,7 @@ object FrmCadEndereco: TFrmCadEndereco
           TextPrompt = 'Digite o cep'
           StyledSettings = [Style, FontColor]
           OnKeyDown = edtCepKeyDown
+          OnExit = edtCepExit
           object edtSearchCep: TEditButton
             CanFocus = False
             Cursor = crArrow
@@ -589,6 +590,7 @@ object FrmCadEndereco: TFrmCadEndereco
             Size.PlatformDefault = False
             StyleLookup = 'searchtoolbutton'
             TabOrder = 0
+            OnKeyDown = edtSearchCepKeyDown
             OnClick = edtSearchCepClick
           end
         end

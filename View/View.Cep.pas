@@ -53,7 +53,10 @@ type
     procedure edtCidadeKeyDown(Sender: TObject; var Key: Word;
       var KeyChar: Char; Shift: TShiftState);
     procedure FormShow(Sender: TObject);
+    procedure edtCepExit(Sender: TObject);
     procedure edtSearchCepClick(Sender: TObject);
+    procedure edtSearchCepKeyDown(Sender: TObject; var Key: Word;
+      var KeyChar: Char; Shift: TShiftState);
   private
     procedure BuscarCep;
     { Private declarations }
@@ -78,11 +81,16 @@ begin
     edtCidade.SetFocus;
 end;
 
+procedure TFrmCadEndereco.edtCepExit(Sender: TObject);
+begin
+  BuscarCep;
+end;
+
 procedure TFrmCadEndereco.edtCepKeyDown(Sender: TObject; var Key: Word;
   var KeyChar: Char; Shift: TShiftState);
 begin
   if (Key = vkReturn) or (Key = vkTab) then
-    BuscarCep;
+    edtCepExit(nil);
 end;
 
 procedure TFrmCadEndereco.edtCidadeKeyDown(Sender: TObject; var Key: Word;
@@ -101,7 +109,14 @@ end;
 
 procedure TFrmCadEndereco.edtSearchCepClick(Sender: TObject);
 begin
-  BuscarCep;
+  edtCepExit(nil);
+end;
+
+procedure TFrmCadEndereco.edtSearchCepKeyDown(Sender: TObject; var Key: Word;
+  var KeyChar: Char; Shift: TShiftState);
+begin
+  if (KeyChar in ['0'..'9']) then
+    Key := #0;
 end;
 
 procedure TFrmCadEndereco.BuscarCep;
