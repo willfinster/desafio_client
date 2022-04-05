@@ -48,8 +48,12 @@ begin
         ShowMessage('Servidores Offline, digite manualmente!');
         Result := default(TCep);
       end;
-    except on E: Exception do
-      ShowMessage(E.Message);
+    except
+      on E: Exception do
+      begin
+        ShowMessage('Falha na conexão, digite o endereço manualmente!');
+        Result := default(TCep);
+      end;
     end;
   finally
     LRequest.Free;

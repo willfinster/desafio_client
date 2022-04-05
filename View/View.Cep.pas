@@ -8,6 +8,7 @@ uses
   System.UITypes,
   System.Classes,
   System.Variants,
+  System.MaskUtils,
   FMX.Types,
   FMX.Controls,
   FMX.Forms,
@@ -43,6 +44,7 @@ type
     Layout4: TLayout;
     Rectangle7: TRectangle;
     edtBairro: TEdit;
+    Image1: TImage;
     procedure ImgCloseClick(Sender: TObject);
     procedure edtCepKeyDown(Sender: TObject; var Key: Word; var KeyChar: Char;
       Shift: TShiftState);
@@ -53,12 +55,11 @@ type
     procedure edtCidadeKeyDown(Sender: TObject; var Key: Word;
       var KeyChar: Char; Shift: TShiftState);
     procedure FormShow(Sender: TObject);
-    procedure edtCepExit(Sender: TObject);
     procedure edtSearchCepClick(Sender: TObject);
-    procedure edtSearchCepKeyDown(Sender: TObject; var Key: Word;
-      var KeyChar: Char; Shift: TShiftState);
+    procedure Image1Click(Sender: TObject);
   private
     procedure BuscarCep;
+    procedure CleanFields;
     { Private declarations }
   public
     { Public declarations }
@@ -81,16 +82,11 @@ begin
     edtCidade.SetFocus;
 end;
 
-procedure TFrmCadEndereco.edtCepExit(Sender: TObject);
-begin
-  BuscarCep;
-end;
-
 procedure TFrmCadEndereco.edtCepKeyDown(Sender: TObject; var Key: Word;
   var KeyChar: Char; Shift: TShiftState);
 begin
   if (Key = vkReturn) or (Key = vkTab) then
-    edtCepExit(nil);
+    BuscarCep;
 end;
 
 procedure TFrmCadEndereco.edtCidadeKeyDown(Sender: TObject; var Key: Word;
@@ -109,14 +105,7 @@ end;
 
 procedure TFrmCadEndereco.edtSearchCepClick(Sender: TObject);
 begin
-  edtCepExit(nil);
-end;
-
-procedure TFrmCadEndereco.edtSearchCepKeyDown(Sender: TObject; var Key: Word;
-  var KeyChar: Char; Shift: TShiftState);
-begin
-  if (KeyChar in ['0'..'9']) then
-    Key := #0;
+  BuscarCep;
 end;
 
 procedure TFrmCadEndereco.BuscarCep;
@@ -131,7 +120,9 @@ begin
       edtBairro.Text   := LCep.bairro;
       edtCidade.Text   := LCep.cidade;
       edtUf.Text       := LCep.uf;
-    end;
+    end
+    else
+      edtEndereco.SetFocus;
   finally
     LCep.Free;
   end;
@@ -139,6 +130,21 @@ end;
 
 procedure TFrmCadEndereco.FormShow(Sender: TObject);
 begin
+  edtCep.SetFocus;
+end;
+
+procedure TFrmCadEndereco.Image1Click(Sender: TObject);
+begin
+  CleanFields;
+end;
+
+procedure TFrmCadEndereco.CleanFields;
+begin
+  edtCep.Text      := '';
+  edtEndereco.Text := '';
+  edtBairro.Text   := '';
+  edtCidade.Text   := '';
+  edtUf.Text       := '';
   edtCep.SetFocus;
 end;
 
