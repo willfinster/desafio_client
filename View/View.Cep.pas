@@ -112,19 +112,27 @@ procedure TFrmCadEndereco.BuscarCep;
 var
   LCep : TCep;
 begin
-  try
+  if Length(edtCep.Text) = 8 then
+  begin
     LCep := TControllerCep.GetCep(edtCep.Text);
-    if Assigned(LCep) then
-    begin
-      edtEndereco.Text := LCep.endereco;
-      edtBairro.Text   := LCep.bairro;
-      edtCidade.Text   := LCep.cidade;
-      edtUf.Text       := LCep.uf;
-    end
-    else
-      edtEndereco.SetFocus;
-  finally
-    LCep.Free;
+    try
+      if Assigned(LCep) then
+      begin
+        edtEndereco.Text := LCep.endereco;
+        edtBairro.Text   := LCep.bairro;
+        edtCidade.Text   := LCep.cidade;
+        edtUf.Text       := LCep.uf;
+      end
+      else
+        edtEndereco.SetFocus;
+    finally
+      LCep.Free;
+    end;
+  end
+  else
+  begin
+    ShowMessage('Cep incorreto, verifique!');
+    edtCep.SetFocus;
   end;
 end;
 
